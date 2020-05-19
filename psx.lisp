@@ -110,7 +110,7 @@
      tree)
     root))
 
-
+;;FIXME: Not sure if we need this anymore
 (defun dom-type-p (type)
   (find type *dom-types*))
 
@@ -143,9 +143,7 @@
               (children-form (cond ((null children) nil)
                                    ((rest children) (list (list 'array)))
                                    (t (list nil)))))
-          (values (if (dom-type-p type)
-                      `(chain React DOM (,type-sym ,@props-form ,@children-form))
-                      `(chain React (create-element ,type-sym ,@props-form ,@children-form)))
+          (values `(chain React (create-element ,type-sym ,@props-form ,@children-form))
                   children)))))
 
 (defun push-compiled-child (child compiled-node)
