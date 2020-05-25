@@ -115,22 +115,20 @@
   (find type *dom-types*))
 
 (defun compile-props (plist)
-  (loop
-    with key = nil
-    for token in plist
-    if (spread-prop-symbol-p key)
-      collect token into prop-objs and
-    do (setf key nil)
-    else if key
-           collect `(ps:create ,key ,token) into prop-objs and
-    do (setf key nil)
-    else
-      do (setf key token)
-    finally
-       (return
-         (if prop-objs
-             `(react:merge-objects ,@prop-objs)
-             (list nil)))))
+  (let ((accum nil)
+        (res nil))
+    (gadgets:do-window (k v plist :size 2 :step 2)
+      (if (spread-prop-symbol-p k)
+          (progn
+            (when accum
+              (push (nreverse accum) res)
+              (setf accum nil))
+            (push (list :... v) res))
+          (progn
+            (push v accum)
+            (push k accum))))
+    (when accum (push (nreverse accum) res))
+    `(paren6:create6 ,@(nreverse res))))
 
 (defun compile-node (parsed-node)
   (if (psx-atom-p parsed-node)
