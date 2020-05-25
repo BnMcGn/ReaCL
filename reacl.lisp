@@ -4,16 +4,17 @@
 
 (def-ps-package #:reacl
   :ps-imports '(#:paren6)
-  :)
+  :js-imports '(("react" "16.12.0"))
+  :code
+  (ps
+    (manage-imports
+     (import (-react) "react"))))
 
 (defpsmacro psx (form)
   (compile-psx form))
 
 (defpsmacro react (function &rest params)
-  `(chain -react ,function ,@params))
-
-(defpsmacro rdom (function &rest params)
-  `(chain -react -d-o-m ,function ,@params))
+  `(chainl -react ,function ,@params))
 
 (defpsmacro prop (&rest params)
   `(chain this #:props ,@params))
