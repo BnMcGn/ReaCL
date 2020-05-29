@@ -2,19 +2,19 @@
 
 (in-package #:reacl)
 
-(def-ps-package #:reacl
+(def-ps-package reacl
   :ps-imports '(#:paren6)
   :js-imports '(("react" "16.12.0"))
   :code
-  (ps
+  (ps:ps
     (manage-imports
      (import (-react) "react"))))
 
 (defpsmacro psx (form)
   (compile-psx form))
 
-(defpsmacro react (function &rest params)
-  `(chainl -react ,function ,@params))
+(defpsmacro react (fname &rest params)
+  `(chainl -react ,fname ,@params))
 
 (defpsmacro prop (&rest params)
   `(chain this #:props ,@params))
@@ -32,7 +32,7 @@
   `(defclass6 (,name (react -component))
      ,@body))
 
-(defpsmacro def-pure-component
+(defpsmacro def-pure-component (name &body body)
     `(defclass6 (,name (react -pure-component))
        ,@body))
 

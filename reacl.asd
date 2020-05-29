@@ -6,6 +6,6 @@
   :license  "MIT"
   :version "0.0.1"
   :serial t
-  :depends-on (#:alexandria #:paren6 #:ps-lib-tool #:gadgets)
+  :depends-on (#:alexandria #:paren6 #:ps-lib-tool #:gadgets #:parenscript)
   :components ((:file "package")
                (:file "reacl")))
