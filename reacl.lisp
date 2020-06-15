@@ -7,8 +7,7 @@
   :js-imports '(("react" "16.12.0"))
   :code
   (ps:ps
-    (manage-imports
-     (import (-react) "react"))))
+    (import-into (@l :reacl) (-react) "react")))
 
 (defpsmacro psx (form)
   (compile-psx form))
