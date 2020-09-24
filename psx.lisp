@@ -117,7 +117,7 @@
 (defun compile-props (plist)
   (let ((accum nil)
         (res nil))
-    (gadgets:do-window (k v plist :size 2 :step 2)
+    (gadgets:do-window ((k v) plist :size 2 :step 2)
       (if (spread-prop-symbol-p k)
           (progn
             (when accum
@@ -125,8 +125,8 @@
               (setf accum nil))
             (push (list :... v) res))
           (progn
-            (push v accum)
-            (push k accum))))
+            (push k accum)
+            (push v accum))))
     (when accum (push (nreverse accum) res))
     `(paren6:create6 ,@(nreverse res))))
 

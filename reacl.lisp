@@ -3,8 +3,8 @@
 (in-package #:reacl)
 
 (def-ps-package reacl
-  :ps-imports '(#:paren6)
-  :js-imports '(("react" "16.12.0"))
+  :ps-requirements '(#:paren6)
+  :js-requirements '(("react" "16.12.0"))
   :init-code
   (ps:ps
     (unless (@l :reacl)
