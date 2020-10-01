@@ -9,4 +9,5 @@
   :depends-on (#:alexandria #:paren6 #:ps-lib-tool #:gadgets #:parenscript)
   :components ((:file "package")
                (:file "psx")
+               (:file "def-component")
                (:file "reacl")))

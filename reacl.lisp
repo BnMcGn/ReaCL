@@ -27,13 +27,4 @@
 (defpsmacro set-state (&rest params)
   `(chain this (#:set-state (create ,@params))))
 
-(defpsmacro def-component (name &body body)
-  `(defclass6 (,name (@l :reacl -react -component))
-     ,@body))
-
-(defpsmacro def-pure-component (name &body body)
-    `(defclass6 (,name (react -pure-component))
-       ,@body))
-
-
 
