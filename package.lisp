@@ -10,4 +10,5 @@
    #:props
    #:prop
    #:react
-   #:psx))
+   #:psx
+   #:super))

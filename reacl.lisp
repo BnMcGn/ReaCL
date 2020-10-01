@@ -7,15 +7,13 @@
   :js-requirements '(("react" "16.12.0"))
   :init-code
   (ps:ps
-    (unless (@l :reacl)
-      (setf (@l :reacl) (new -object))
-      (import-into (@l :reacl) (-react) "react"))))
+    (import-into (@l :reacl) ((:all -react)) "react")))
 
 (defpsmacro psx (form)
   (compile-psx form))
 
 (defpsmacro react (fname &rest params)
-  `(chainl :reacl -react ,fname ,@params))
+  `(chainl :reacl -react (,fname ,@params)))
 
 (defpsmacro prop (&rest params)
   `(chain this #:props ,@params))
@@ -30,7 +28,7 @@
   `(chain this (#:set-state (create ,@params))))
 
 (defpsmacro def-component (name &body body)
-  `(defclass6 (,name (react -component))
+  `(defclass6 (,name (@l :reacl -react -component))
      ,@body))
 
 (defpsmacro def-pure-component (name &body body)
