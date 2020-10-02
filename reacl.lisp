@@ -15,16 +15,5 @@
 (defpsmacro react (fname &rest params)
   `(chainl :reacl -react (,fname ,@params)))
 
-(defpsmacro prop (&rest params)
-  `(chain this #:props ,@params))
-
-(defpsmacro props ()
-  (@ this props))
-
-(defpsmacro state (&rest params)
-  `(chain this #:state ,@params))
-
-(defpsmacro set-state (&rest params)
-  `(chain this (#:set-state (create ,@params))))
 
 
