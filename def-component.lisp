@@ -18,19 +18,46 @@
     (var propsref (chain (lambda () (@ this props)) (bind this)))
     ,@(cdddr func-code)))
 
-(defun add-constructor-wrapper (const-code)
+(defun add-constructor-wrapper (const-code bind-clauses)
   `(defun constructor (props)
      (super props)
      (var thisref (chain (lambda () this) (bind this)))
      (var propsref (lambda () props))
      (macrolet ((set-state (&rest params)
                   `(setf (@ (thisref) state) (create ,@params))))
+       ,@bind-clauses
        ,@const-code
        this)))
 
+(defun find-bindables (body)
+  "Collect function names to be bound in the constructor"
+  (cl-utilities:collecting
+      (dolist (form body)
+        ;;For now we only collect defun clauses. Should we also do get/set?
+        (when (eq 'defun (car form))
+          (when (eq 'constructor (second form))
+            ;; At this point we don't need bindables if a constructor is manually defined.
+            (return-from find-bindables nil))
+          (cl-utilities:collect (second form))))))
+
+(defun bind-clauses (syms)
+  (cl-utilities:collecting
+    (dolist (itm syms)
+      (unless (symbolp itm)
+        (error "Function name must be a symbol"))
+      (cl-utilities:collect `(setf (@ this ,itm) (chain this ,itm (bind this)))))))
+
+(defun default-constructor (bindables)
+  `(defun constructor (props)
+     (super props)
+     ,@bindables
+     this))
+
 (defun proc-component-body (constructor body)
-  (let ((con (when constructor (add-constructor-wrapper constructor)))
-        (res nil))
+  (let* ((bindables (find-bindables body))
+         (con (when constructor (add-constructor-wrapper constructor (bind-clauses bindables))))
+         (con (or con (default-constructor bindables)))
+         (res nil))
     (dolist (form body)
       (when (and con (string-equal (second form) 'constructor))
         (error "Constructor already defined as first parameter"))
