@@ -56,7 +56,7 @@
 (defun proc-component-body (constructor body)
   (let* ((bindables (find-bindables body))
          (con (when constructor (add-constructor-wrapper constructor (bind-clauses bindables))))
-         (con (or con (default-constructor bindables)))
+         (con (or con (default-constructor (bind-clauses bindables))))
          (res nil))
     (dolist (form body)
       (when (and con (string-equal (second form) 'constructor))
