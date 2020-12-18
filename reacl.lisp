@@ -3,8 +3,8 @@
 (in-package #:reacl)
 
 (def-ps-package reacl
-  :ps-requirements '(#:paren6)
-  :js-requirements '(("react" "17.0.1"))
+  ;; Version 17 is still too bleeding edge.
+  :js-requirements '(("react" "16.0.0"))
   :init-code
   (ps:ps
     (import-into (@l :reacl) ((:all -react)) "react")))
