@@ -123,7 +123,8 @@
             (when accum
               (push (nreverse accum) res)
               (setf accum nil))
-            (push (list :... v) res))
+            (push :... res)
+            (push v res))
           (progn
             (push k accum)
             (push v accum))))
@@ -134,14 +135,14 @@
   (if (psx-atom-p parsed-node)
       parsed-node
       (destructuring-bind (&key type props children) parsed-node
-        (let ((type-sym (make-symbol (string type)))
+        (let ((type-sym (if (dom-type-p type) type (make-symbol (string type))))
               (props-form (cond ((and (null children) (null props)) nil)
                                 ((null props) (list nil))
                                 (t `(,(compile-props props)))))
               (children-form (cond ((null children) nil)
                                    ((rest children) (list (list 'array)))
                                    (t (list nil)))))
-          (values `(chain React (create-element ,type-sym ,@props-form ,@children-form))
+          (values `(chain (@l :reacl -react) (create-element ,type-sym ,@props-form ,@children-form))
                   children)))))
 
 (defun push-compiled-child (child compiled-node)
