@@ -75,7 +75,7 @@
        ,@(proc-component-body constructor body)))
 
 (defpsmacro def-pure-component (name constructor &body body)
-  `(defclass6 (,name (react -pure-component))
+  `(defclass6 (,name (@l :reacl -react -pure-component))
        ,@(proc-component-body constructor body)))
 
 (defpsmacro prop (&rest params)
