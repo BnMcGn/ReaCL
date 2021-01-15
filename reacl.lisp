@@ -17,7 +17,7 @@
 
 ;; Context stuff
 
-(defpsmacro defcontext (name value &keyword display-name)
+(defpsmacro defcontext (name value &key display-name)
   `(progn
      (var ,name (react create-context ,value))
      (when ,display-name (setf (@ ,name display-name) ,display-name))))

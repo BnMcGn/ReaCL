@@ -11,4 +11,7 @@
    #:prop
    #:react
    #:psx
-   #:super))
+   #:super
+   #:defcontext
+   #:let-context
+   #:get-context))
