@@ -7,7 +7,7 @@
   ;; We are a little careless about where these symbols are placed in the code
   ;; because a false positive will do no harm.
   (and (member (first code) '(defun get set))
-       (some (alexandria:rcurry #'member '(prop props state set-state thisref))
+       (some (alexandria:rcurry #'member '(prop props state set-state thisref propsref))
              (alexandria:flatten code))))
 
 (defun add-standard-bindings (func-code)
