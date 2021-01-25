@@ -14,4 +14,5 @@
    #:super
    #:defcontext
    #:let-context
-   #:get-context))
+   #:get-context
+   #:propsref))

@@ -23,7 +23,7 @@
      (when ,display-name (setf (@ ,name display-name) ,display-name))))
 
 (defpsmacro let-context ((&rest context-pairs) &body body)
-  (let ((accum body))
+  (let ((accum `(progn ,@body)))
     (dolist (itm (reverse context-pairs))
       (unless (listp itm)
         (error "Contexts must be provided in (context value) pairs"))
