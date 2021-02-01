@@ -20,7 +20,7 @@
 (defpsmacro defcontext (name value &key display-name)
   `(progn
      (var ,name (react create-context ,value))
-     (setf (@ ,name display-name) ,(or display-name name))))
+     (setf (@ ,name display-name) ',(or display-name name))))
 
 (defpsmacro let-context ((&rest context-pairs) &body body)
   (let ((accum `(list ,@body)))
@@ -42,7 +42,7 @@
         (setf
          accum
          `(react create-element (@ ,context -consumer)
-                 (create :key ,(format nil "~a-key" context))
+                 (create :key 1)
                  (paren6:=> ,binding ,accum)))))
     accum))
 
